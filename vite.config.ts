@@ -1,15 +1,18 @@
-/**
- * KIRO INTEGRATION: Vite Configuration for NammaMysuru
- * 
- * This build configuration was set up with Kiro's assistance:
- * - Kiro helped configure Vite for optimal React development and production builds
- * - The React plugin configuration was guided by Kiro's recommendations
- */
+// Generated with guidance from Kiro AI for NammaMysuru project
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path from "path";
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-// https://vite.dev/config/
-export default defineConfig({
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
+  server: {
+    host: "::",
+    port: 8080,
+  },
   plugins: [react()],
-})
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+}));

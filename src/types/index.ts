@@ -42,7 +42,7 @@ export interface ModeConfig {
 
 // Error types for AI service
 export interface AIServiceError {
-  type: 'network' | 'timeout' | 'invalid_response' | 'unknown';
+  type: 'network' | 'timeout' | 'invalid_response' | 'api_key' | 'quota' | 'safety' | 'unknown';
   message: string;
   retryable: boolean;
 }

@@ -1,120 +1,113 @@
-# NammaMysuru - Your Local Mysuru Guide
+# NammaMysuru - AI-Powered Mysuru Guide
 
-NammaMysuru is an AI-powered local guide web application for Mysuru (Mysore), Karnataka. Meet Mysa, your friendly local guide who helps you discover the city's food, Dasara traditions, and walking routes through an interactive chat interface.
+Made with ❤️ for Mysore with KIRO
+
+Built with guidance from Kiro AI for exploring the royal city of Mysuru.
+
+## About
+
+NammaMysuru is your intelligent local guide to Mysuru (Mysore), Karnataka. Experience the royal city like a local with AI-powered recommendations for food, Dasara festivities, and heritage walks.
 
 ## Features
 
-- **Three Conversation Modes**: Food, Dasara, and Walks
-- **Interactive Chat Interface**: Chat with Mysa, your local AI guide
-- **Suggestion Cards**: Quick-start prompts for common questions
-- **Responsive Design**: Works on desktop and mobile devices
-- **Cultural Authenticity**: Powered by local knowledge in product.md
-- **Heritage-Inspired Design**: Mysuru Palace and Dasara themed colors
+- **AI Chat Guide (Mysa)** - Get personalized recommendations from your local AI guide
+- **Food Trails** - Discover authentic local eateries and iconic dishes like Mysore Pak
+- **Dasara Festival Guide** - Navigate the 10-day royal festival with insider tips
+- **Heritage Walks** - Explore centuries of history with curated walking routes
+- **Responsive Design** - Works perfectly on desktop and mobile devices
 
-## How to Run
+## Tech Stack
 
-### Development
+This project is built with:
+
+- **React** + **TypeScript** - Modern frontend framework with type safety
+- **Vite** - Fast build tool and development server
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful, accessible UI components
+- **Kiro AI Integration** - Intelligent chat responses with local knowledge
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd namma-mysuru
+```
+
+2. Install dependencies:
 ```bash
 npm install
+```
+
+3. Set up environment variables:
+```bash
+# Copy the example environment file
+cp .env.example .env.local
+
+# Edit .env.local and add your Google Gemini API key
+# Get your API key from: https://makersuite.google.com/app/apikey
+```
+
+4. Start the development server:
+```bash
 npm run dev
 ```
 
-### Production Build
-```bash
-npm run build
-npm run preview
+5. Open your browser and navigate to `http://localhost:5173`
+
+## Environment Variables
+
+This project requires a Google Gemini API key. Create a `.env.local` file in the root directory:
+
+```env
+VITE_GOOGLE_API_KEY=your_actual_api_key_here
 ```
 
-## Deployment
+**⚠️ Security Note:** Never commit your `.env.local` file or any files containing API keys to version control. The `.gitignore` file is configured to prevent this.
 
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Vercel will automatically detect the Vite configuration
-4. Deploy with one click
+## Available Scripts
 
-### Netlify
-1. Build the project: `npm run build`
-2. Upload the `dist` folder to Netlify
-3. Configure redirects for SPA routing
-
-## How Kiro Was Used
-
-This project was built using Kiro AI assistant throughout the development process:
-
-### Project Scaffolding & Setup
-- **Initial Setup**: Kiro generated the React + TypeScript + Vite project structure
-- **Dependencies**: Kiro helped select and configure Tailwind CSS with custom color palette
-- **Directory Structure**: Kiro organized the modular folder structure (components, services, types)
-
-### UI Component Development
-- **Component Architecture**: Kiro designed the component hierarchy and prop interfaces
-- **Header Component**: Kiro created the heritage-inspired styling and responsive typography
-- **ModeTabs**: Kiro implemented the pill-style buttons with accessibility features
-- **ChatPane**: Kiro built the chat interface with auto-scroll and loading states
-- **MessageBubble**: Kiro designed distinct styling for user vs assistant messages
-- **SuggestionCards**: Kiro created mode-specific suggestions with engaging content
-
-### Product.md Knowledge Organization
-- **Content Structure**: Kiro helped organize Mysuru knowledge by mode (Food, Dasara, Walks)
-- **Mysa Personality**: Kiro defined the friendly local guide persona and tone guidelines
-- **Response Examples**: Kiro created authentic example responses for each mode
-- **Fallback Behavior**: Kiro structured graceful error handling when information is missing
-
-### AI Service Integration
-- **Service Architecture**: Kiro designed the modular AI service for easy provider swapping
-- **Error Handling**: Kiro implemented comprehensive retry logic and timeout handling
-- **Context Integration**: Kiro structured how product.md content flows to AI responses
-- **Mock Responses**: Kiro created sophisticated mode-specific response generation
-
-### Debugging & Iteration
-- **Component Refinement**: Kiro helped debug responsive layout issues
-- **State Management**: Kiro optimized the message flow and loading state handling
-- **Accessibility**: Kiro added ARIA labels and keyboard navigation support
-- **Performance**: Kiro implemented context caching and efficient re-renders
-
-### Key Kiro Contributions
-- **Rapid Development**: What would take days was completed in hours with Kiro's assistance
-- **Best Practices**: Kiro ensured TypeScript interfaces, error boundaries, and clean architecture
-- **Cultural Authenticity**: Kiro helped structure local knowledge for accurate AI responses
-- **User Experience**: Kiro guided the creation of intuitive, accessible interface design
-
-The `.kiro` folder in this repository contains the complete spec-driven development process, including requirements, design document, and implementation tasks that guided this project.
-
-## Architecture
-
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS with custom color palette
-- **State Management**: React hooks (useState, useEffect)
-- **AI Integration**: Modular service layer ready for various AI providers
-- **Context**: Static markdown file (product.md) with local knowledge
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
 ## Project Structure
 
 ```
 src/
-├── components/          # UI components
-│   ├── Header.tsx
-│   ├── ModeTabs.tsx
-│   ├── ChatPane.tsx
-│   ├── MessageBubble.tsx
-│   └── SuggestionCards.tsx
-├── services/           # Business logic
-│   ├── aiService.ts
-│   └── contextLoader.ts
-├── types/              # TypeScript definitions
-│   └── index.ts
-└── App.tsx            # Main application
+├── components/          # React components
+│   ├── ui/             # shadcn/ui components
+│   ├── ChatPanel.tsx   # Main chat interface
+│   ├── Hero.tsx        # Hero section
+│   └── ...
+├── services/           # API and service functions
+├── types/              # TypeScript type definitions
+├── lib/                # Utility functions
+└── assets/             # Images and static assets
 ```
 
-## Testing Error States
+## Deployment
 
-To test error handling, type "error test" in the chat - this will simulate a network error and show the error handling UI.
+Build the project for production:
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist` directory, ready for deployment to any static hosting service.
 
 ## Contributing
 
-This project was built for the AWS Builder Center weekly challenge. Feel free to fork and enhance!
+This project was built with Kiro AI assistance. Feel free to contribute improvements and bug fixes.
 
 ## License
 
-MIT License - feel free to use this code for your own local guide applications.
+MIT License - feel free to use this project as inspiration for your own local guide applications.

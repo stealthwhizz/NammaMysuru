@@ -1,25 +1,15 @@
 import React from 'react';
 
-/**
- * KIRO INTEGRATION: Header Component
- * 
- * This component was created with Kiro's assistance:
- * - Kiro helped design the heritage-inspired styling and color scheme
- * - Kiro guided the implementation of responsive typography
- * - The Tailwind CSS classes and gradient design were refined with Kiro's suggestions
- */
-
 const Header: React.FC = () => {
   return (
-    <header className="bg-gradient-to-r from-primary-800 to-blue-900 text-white py-6 px-4 text-center">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-serif font-bold mb-2 text-secondary-100">
-          NammaMysuru
-        </h1>
-        <p className="text-lg md:text-xl text-heritage-paper font-light">
-          Meet <strong className="font-semibold text-secondary-200">Mysa</strong>, your local guide for Mysuru's food, Dasara, and walks
-        </p>
+    <header className="flex items-center justify-between">
+      <div>
+        <h1 className="text-xl font-serif font-semibold text-[#4b2b1a]">NammaMysuru</h1>
+        <p className="text-xs text-[#3b3126]">Mysa · Mysuru local guide</p>
       </div>
+      <span className="inline-flex h-7 px-3 items-center rounded-full bg-[#fef3c7] text-[#b45309] text-[11px] font-medium border border-[#e2c9a2]">
+        ● Online
+      </span>
     </header>
   );
 };
