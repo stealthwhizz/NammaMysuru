@@ -6,8 +6,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import { debugEnvironment } from "./debug";
 
 const queryClient = new QueryClient();
+
+// Debug environment variables on app load
+debugEnvironment();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
