@@ -5,10 +5,11 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  // For Vercel deployment - no base path needed
-  const base = '/';
+  // Determine base path based on deployment target
+  const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
+  const base = isGitHubPages ? '/NammaMysuru/' : '/';
   
-  console.log('Vite config - mode:', mode, 'base:', base);
+  console.log('Vite config - mode:', mode, 'base:', base, 'isGitHubPages:', isGitHubPages);
   
   return {
     base,
@@ -29,6 +30,10 @@ export default defineConfig(({ command, mode }) => {
       rollupOptions: {
         output: {
           manualChunks: undefined,
+          // Ensure proper file extensions
+          entryFileNames: 'assets/[name]-[hash].js',
+          chunkFileNames: 'assets/[name]-[hash].js',
+          assetFileNames: 'assets/[name]-[hash].[ext]'
         },
       },
     }
