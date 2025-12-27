@@ -1,57 +1,43 @@
+/**
+ * Test-Specific AI Service for NammaMysuru Property Tests
+ * Generated with guidance from Kiro AI
+ * 
+ * This module provides a Node.js-compatible version of the AI service
+ * for property-based testing, handling environment differences between
+ * Vite (browser) and Jest (Node.js) environments.
+ */
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import type { CallMysaParams, AIServiceError } from '../types';
 
 /**
- * KIRO INTEGRATION: Real Google Gemini AI Service for NammaMysuru
+ * Test-compatible AI service call using Google Gemini API
  * 
- * This service integrates with Google Gemini API to provide real AI responses
- * as Mysa, the local Mysuru guide, using product.md context for authentic guidance.
+ * This function replicates the main AI service functionality but works
+ * in the Node.js testing environment without import.meta dependencies.
  */
-
-// Initialize Google Gemini AI - moved inside function for better error handling
-// const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GOOGLE_API_KEY);
-
-/**
- * Real AI service call using Google Gemini API
- * 
- * This function integrates with Google Gemini to generate contextual responses
- * as Mysa, using the product.md content for authentic Mysuru-specific guidance.
- * 
- * @param params - Parameters for AI service call
- * @returns Promise resolving to Mysa's response
- */
-export async function callMysa(params: CallMysaParams): Promise<string> {
+export async function callMysaForTesting(params: CallMysaParams): Promise<string> {
   const { mode, latestUserMessage, messages, contextContent } = params;
   
   try {
-    // Check if API key is available
-    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-    console.log('API Key check:', {
-      hasApiKey: !!apiKey,
-      keyLength: apiKey?.length || 0,
-      keyPrefix: apiKey?.substring(0, 10) || 'none',
-      environment: import.meta.env.MODE,
-      isDev: import.meta.env.DEV,
-      isProd: import.meta.env.PROD
-    });
+    // Get API key from process.env instead of import.meta.env
+    const apiKey = process.env.VITE_GOOGLE_API_KEY;
     
     if (!apiKey) {
       throw new Error('API_KEY_MISSING: Google API key not found in environment variables');
     }
     
-    if (apiKey === 'your_actual_api_key_here') {
+    if (apiKey === 'your_actual_api_key_here' || apiKey === 'test-key') {
       throw new Error('API_KEY_PLACEHOLDER: Please replace the placeholder API key with your actual Google API key');
     }
     
     // Initialize Google Gemini AI
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Get the generative model - using current stable Gemini models
-    // Updated model names as of December 2024
+    // Get the generative model
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash" // Current stable model name (gemini-pro is deprecated)
+      model: "gemini-1.5-flash"
     });
-    console.log('Using Gemini 1.5 Flash model');
     
     // Construct the comprehensive system prompt with context and personality
     const systemPrompt = `You are Mysa, a friendly 25-year-old local guide from Mysuru (Mysore), Karnataka, India. You have lived in Mysuru your entire life and love helping visitors discover your city.
@@ -99,50 +85,19 @@ Now respond to this user message as Mysa: "${latestUserMessage}"
 
 Remember: You are a local Mysuru guide. Stay focused on Mysuru. Use the context above. Be helpful, authentic, and friendly!`;
 
-    console.log('Calling Google Gemini API with context:', {
-      mode,
-      promptLength: systemPrompt.length,
-      contextLength: contextContent.length,
-      userMessage: latestUserMessage
-    });
-    
     // Generate response using Gemini
-    console.log('About to call Gemini API...');
     const result = await model.generateContent(systemPrompt);
-    console.log('Gemini API call completed, processing response...');
-    
     const response = await result.response;
     const text = response.text();
-    
-    console.log('Gemini response received:', {
-      hasText: !!text,
-      textLength: text?.length || 0,
-      textPreview: text?.substring(0, 100) || 'empty'
-    });
     
     // Validate response
     if (!text || text.trim().length === 0) {
       throw new Error('Empty response from Gemini API');
     }
     
-    console.log('Gemini API response received:', {
-      responseLength: text.length,
-      mode,
-      success: true
-    });
-    
     return text.trim();
     
   } catch (error) {
-    console.error('Gemini API call failed - Full error details:', {
-      error,
-      errorMessage: error instanceof Error ? error.message : 'Unknown error',
-      errorStack: error instanceof Error ? error.stack : 'No stack',
-      errorType: typeof error,
-      mode,
-      userMessage: latestUserMessage
-    });
-    
     // Handle specific Gemini API errors
     if (error instanceof Error) {
       const errorMessage = error.message.toLowerCase();
@@ -163,15 +118,9 @@ Remember: You are a local Mysuru guide. Stay focused on Mysuru. Use the context 
 }
 
 /**
- * Enhanced AI service call with error handling and retry logic
- * This is the main function that should be used by UI components
- * 
- * @param params - Parameters for AI service call
- * @param retryCount - Current retry attempt (internal use)
- * @returns Promise resolving to Mysa's response
- * @throws AIServiceError for various failure scenarios
+ * Enhanced AI service call with error handling and retry logic for testing
  */
-export async function callMysaWithErrorHandling(
+export async function callMysaWithErrorHandlingForTesting(
   params: CallMysaParams, 
   retryCount: number = 0
 ): Promise<string> {
@@ -188,7 +137,7 @@ export async function callMysaWithErrorHandling(
     
     // Race between AI call and timeout
     const response = await Promise.race([
-      callMysa(params),
+      callMysaForTesting(params),
       timeoutPromise
     ]);
     
@@ -269,22 +218,11 @@ export async function callMysaWithErrorHandling(
       const delay = Math.pow(2, retryCount) * 1000;
       await new Promise(resolve => setTimeout(resolve, delay));
       
-      return callMysaWithErrorHandling(params, retryCount + 1);
+      return callMysaWithErrorHandlingForTesting(params, retryCount + 1);
     }
     
     // Max retries reached or non-retryable error
     console.error('AI service call failed after retries:', errorMessage);
     throw aiError;
   }
-}
-
-/**
- * Utility function to create retry mechanism for failed requests
- * This allows UI components to easily implement retry functionality
- * 
- * @param params - Original parameters for the failed request
- * @returns Promise resolving to Mysa's response on retry
- */
-export async function retryLastRequest(params: CallMysaParams): Promise<string> {
-  return callMysaWithErrorHandling(params, 0);
 }

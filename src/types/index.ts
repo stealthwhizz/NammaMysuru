@@ -21,7 +21,7 @@ export interface ChatMessage {
 
 export interface CallMysaParams {
   mode: Mode;
-  messages: ChatMessage[];
+  messages: Array<{ role: 'user' | 'assistant'; content: string }>;
   latestUserMessage: string;
   contextContent: string;
 }

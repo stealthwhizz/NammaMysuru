@@ -92,7 +92,7 @@ Complete these tasks to establish a working skeleton with mock AI responses.
 - Document expected parameters (mode, messages, context content)
 - _Requirements: 6.1, 6.2_
 
-- [ ]* 4.2 Write property test for AI service parameters
+- [x]* 4.2 Write property test for AI service parameters
 - **Property 4: AI service receives complete context**
 - **Validates: Requirements 2.3, 4.1, 6.2, 7.3**
 
