@@ -3,6 +3,8 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
+  console.log('Hero component rendering');
+  
   const scrollToChat = () => {
     document.getElementById("chat")?.scrollIntoView({ behavior: "smooth" });
   };

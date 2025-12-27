@@ -20,6 +20,9 @@ import { loadContextContent } from "@/services/contextLoader";
  * - Context content from product.md
  */
 const Index = () => {
+  // Debug logging
+  console.log('Index component rendering');
+  
   // Main app state
   const [mode, setMode] = useState<Mode>('food');
   const [messages, setMessages] = useState<ChatMessage[]>([
