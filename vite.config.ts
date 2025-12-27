@@ -5,8 +5,12 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  const isProduction = mode === 'production';
-  const base = isProduction ? '/NammaMysuru/' : '/';
+  // For GitHub Pages, we need the repository name as base path
+  const base = process.env.NODE_ENV === 'production' || mode === 'production' 
+    ? '/NammaMysuru/' 
+    : '/';
+  
+  console.log('Vite config - mode:', mode, 'base:', base, 'NODE_ENV:', process.env.NODE_ENV);
   
   return {
     base,
@@ -24,6 +28,11 @@ export default defineConfig(({ command, mode }) => {
       outDir: 'dist',
       assetsDir: 'assets',
       sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks: undefined,
+        },
+      },
     }
   };
 });
