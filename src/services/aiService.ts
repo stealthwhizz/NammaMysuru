@@ -29,11 +29,18 @@ export async function callMysa(params: CallMysaParams): Promise<string> {
     console.log('API Key check:', {
       hasApiKey: !!apiKey,
       keyLength: apiKey?.length || 0,
-      keyPrefix: apiKey?.substring(0, 10) || 'none'
+      keyPrefix: apiKey?.substring(0, 10) || 'none',
+      environment: import.meta.env.MODE,
+      isDev: import.meta.env.DEV,
+      isProd: import.meta.env.PROD
     });
     
     if (!apiKey) {
       throw new Error('API_KEY_MISSING: Google API key not found in environment variables');
+    }
+    
+    if (apiKey === 'your_actual_api_key_here') {
+      throw new Error('API_KEY_PLACEHOLDER: Please replace the placeholder API key with your actual Google API key');
     }
     
     // Initialize Google Gemini AI
