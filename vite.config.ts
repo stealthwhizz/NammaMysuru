@@ -5,8 +5,8 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  // For GitHub Pages deployment
-  const base = '/NammaMysuru/';
+  // For Vercel deployment - no base path needed
+  const base = '/';
   
   console.log('Vite config - mode:', mode, 'base:', base);
   
